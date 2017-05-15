@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Realtimer</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+     <!--Google fonts-->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Satisfy">
+     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Oswald">
+
+
+
+    <!-- Material Design Bootstrap -->
+
+    <link href="css/mdb.min.css" rel="stylesheet">
+
+    <!--Scrolling Nav css -->
+    <link href="css/scrolling-nav.css" rel="stylesheet">
+    <!--Autocomplete input styling-->
+     <link rel="stylesheet" href="css/jquery.autocomplete.css">
+
+    <!-- Your custom styles (optional) -->
+    <link href="css/style.css" rel="stylesheet">
+
+</head>
+
+<body >
+
+    <!-- Start your project here-->
+    <div id="user-selection-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h4 class="modal-title">Please select your direction</h4>
+      </div>
+      <div class="modal-body">
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+    <!-- start of  modal  for dublin bus time information-->
+	<div class="modal fade" id="busModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header" id="modalheader">
+                    <h3 class="modal-title" id="myModalLabel">Real Time Information</h3>
+
+					<button type="button"  class=" btn btn-sm btn-success pull-right get-info-btn" ><span class="fa fa-refresh"></span>
+					</button>
+
+
+				</div>
+				<div class="modal-body">
+
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" data-dismiss="modal"><i class="fa fa-close"></i></button>
+
+				</div>
+			</div>
+		</div>
+	</div> <!-- **** End of modal**** -->
+
+<!--Navbar-->
+<nav class="navbar fixed-top navbar-toggleable-md scrolling-navbar  bg-white ">
+     <a class="navbar-brand smoothScroll pl-3 " href="#intro">
+         <span class="fa fa-subway fa-2x "></span>
+        </a>
+     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav1" aria-controls="navbarNav1" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    <div class="container">
+
+
+        <div class="collapse navbar-collapse" id="navbarNav1">
+            <ul class="navbar-nav mr-auto   ">
+                <li class="nav-item active mr-5 ">
+                    <a class="nav-link smoothScroll " href="#intro"><i class="fa fa-home"> </i> Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item mr-5">
+                    <a class="nav-link smoothScroll " href="#dublin-bus"><i class=" fa  fa-bus "> </i> Dublin Bus</a>
+                </li>
+                <li class="nav-item mr-5">
+                    <a class="nav-link smoothScroll" href="#irish-rail"><i class="fa fa-subway"></i> Irish Rail</a>
+                </li>
+                <li class="nav-item mr-5">
+                    <a class="nav-link smoothScroll" href="#dublin-bike">Dublin Bike</a>
+                </li>
+                <li class="nav-item mr-5">
+                    <a class="nav-link smoothScroll" href="#contact">Contact</a>
+                </li>
+
+            </ul>
+
+        </div>
+    </div>
+</nav>
+<!--/.Navbar-->
+
+
+
+
+     <!-- Intro Section -->
+    <section id="intro" class="intro-section d-flex align-items-center ">
+     <div id="cover-caption"   >
+         <div class="container ">
+             <div class="col-sm-10 push-sm-2 ">
+                 <h1 class="display-3 animated fadeInDown">Realtime Information </h1>
+                 <p  class="mb-2  " style="font-size:x-large">Get the realtime information for Dublin bus or train...</p>
+
+                 <button id="cover-bus-btn" type="button" class="btn  btn-outline-white  animated fadeInLeft"> <i class=" fa  fa-bus ">&nbsp; Dublin bus</i></button>
+                 <button id="cover-train-btn" type="button" class="btn  btn-outline-white animated fadeInRight"><i class=" fa  fa-subway ">&nbsp; Irish rail</i></button>
+             </div>
+         </div>
+
+     </div>
+
+    </section>
+     <!-- Dublin Bus  Section -->
+    <section id="dublin-bus" class="bus-section d-flex" >
+        <div class="container align-self-center">
+            <div class="row">
+
+                <div class="md-form input-group col-md-6  ">
+                    <label id="err-label-for-stopid-input" class="text-danger pl-sm-4 d-none">Please enter a stop number</label>
+                    <input type="search"id="user-stop-no" class="form-control  " placeholder="Search by bus stop number or by address">
+                    <span class="input-group-btn">
+        <button id="stop-search-btn" class="btn btn-success btn-lg get-info-btn " type="button"  data-toggle="modal"  data-target="#busModal"><i class="fa fa-search"></i> Search</button>
+    </span>
+                </div>
+                <div class="md-form input-group col-md-6 ">
+                    <label id="err-label-for-route-input" class="text-danger pl-sm-4 d-none">Please enter a route</label>
+                    <input type="text" id="user-route-no" class="form-control" placeholder="Search by route ">
+                    <span class="input-group-btn">
+        <button id="route-search-btn" class="btn btn-success btn-lg" type="button"  data-toggle="modal"  data-target="#user-selection-modal"><i class="fa fa-search"></i> Search</button>
+    </span>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!--Bus route Section-->
+     <section id="bus-route-sec" class="bus-route-section d-none   ">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1>Please select the stop</h1>
+                    <table class='table' id='stops-table'>
+                        <caption class="caption-top"></caption>
+                        <thead>
+                        <tr ><th >Stop</th><th >Address</th><th >Real Time Information </th></tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Irishrail Section -->
+    <section id="irish-rail" class="rail-section d-flex ">
+        <div class="container align-self-center ">
+            <div class="row">
+                <div class="col-lg-8 push-sm-2">
+                    <div class="md-form input-group">
+                        <label id="err-label-for-station-input" class="text-danger pl-sm-4 d-none">Please enter a valid station name</label>
+                        <input  type="text" class="form-control"  id="user-station-name" placeholder="Search for live departure times for any station by name">
+                         <span class="input-group-btn">
+        <button id="rail-search-btn"class="btn  btn-lg btn-success" type="button"><i class="fa fa-search"></i> Search</button>
+      </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+     <!--Rain timing info Section-->
+    <section id="rail-timing-sec" class="rail-timing-section d-none">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+
+                     <table class='table' id='train-status-table'>
+                        <caption class="caption-top"> <button type="button" class="btn btn-primary btn-sm pull-right" id="train-status-close">Close</button></caption>
+                        <thead>
+                        <tr ><th >Destination</th><th class="hidden-sm-down" >Origin</th><th >Sch</th><th >ETA</th><th >Due in</th></tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="dublin-bike" class="bike-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1>Dublin Bike</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1>Contact Section</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /Start your project here-->
+
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="js/tether.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="js/mdb.min.js"></script>
+     <!-- Scrolling Nav JavaScript -->
+    <script src="js/smoothscroll.js"></script>
+    <!--xml2json JavaScript-->
+     <script src="js/jquery.xml2json.js"></script>
+
+    <!--Autocomplete JS-->
+    <script src="js/jquery.autocomplete.js"></script>
+
+    <!-- Dublin Bus JavaScript -->
+    <script src="js/dublin-bus.js"></script>
+    <script src="js/irishrail.js"></script>
+
+
+
+
+</body>
+
+</html>

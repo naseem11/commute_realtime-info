@@ -1,0 +1,61 @@
+/* YOUR CUSTOM STYLES */
+
+#stops-table  th,#train-status-table th{
+
+    text-align: center;
+}
+
+.caption-top{
+
+   caption-side: top;
+}
+
+#cover-caption{
+
+    width:85%;
+    font-family: Oswald;
+}
+.bg-white{
+
+    background: white;
+
+}
+
+.modal-title{
+
+    color:#26a69a;
+    font-family: Oswald;
+}
+
+.modal-content{
+
+    border-radius:10px;
+}
+
+#navbarNav1 a{
+
+    font-size: 1.3rem;
+    font-family: Oswald;
+}
+
+.btn-success{
+    background-color: #00796b;
+}
+.navbar-brand,#navbarNav1 a {
+
+   color:#26a69a ;
+}
+
+.navbar-toggler-icon{
+
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(38, 166, 154, 1)' stroke-width='4' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
+
+
+@media (max-width: 768px) {
+   #cover-caption {
+      width: 100%;
+    }
+}
+
