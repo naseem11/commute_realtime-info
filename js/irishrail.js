@@ -2,7 +2,7 @@
 $(document).ready(function () {
  // ............Get the list of all stations.............
 
-    $.get('http://api.irishrail.ie/realtime/realtime.asmx/getAllStationsXML_WithStationType?StationType=A',function (xml) {
+    $.get('https://api.irishrail.ie/realtime/realtime.asmx/getAllStationsXML_WithStationType?StationType=A',function (xml) {
 
         var stationsJson=$.xml2json(xml);
         var stations=[];
@@ -52,7 +52,7 @@ function displayTrainStatus() {
         clearStatusTable();
 
 
-        var api = 'http://api.irishrail.ie/realtime/realtime.asmx/getStationDataByNameXML?StationDesc=';
+        var api = 'https://api.irishrail.ie/realtime/realtime.asmx/getStationDataByNameXML?StationDesc=';
         var stationName = $('#user-station-name').val();
         var url = api + stationName;
         $.get(url, function (xml) {
