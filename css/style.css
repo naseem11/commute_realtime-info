@@ -7,7 +7,7 @@
 
 .caption-top{
 
-   caption-side: top;
+    caption-side: top;
 }
 
 #cover-caption{
@@ -46,7 +46,7 @@ table caption{
 
 #train-status-table ,#stops-table{
 
-   margin-bottom: 5rem;
+    margin-bottom: 5rem;
 }
 
 .sec-heading{
@@ -57,7 +57,7 @@ table caption{
 
 .navbar-brand,#navbarNav1 a,.modal-title,.heading {
 
-   color:#26a69a ;
+    color:#26a69a ;
 }
 
 .navbar-toggler-icon{
@@ -76,8 +76,8 @@ thead{
 
 
 @media (max-width: 768px) {
-   #cover-caption {
-      width: 100%;
+    #cover-caption {
+        width: 100%;
     }
 }
 

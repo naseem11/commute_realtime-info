@@ -50,7 +50,7 @@ $(window).on('load', function () {
 
 function getBusTime(stopNo,createTableCallback){
 
-
+    $('#myModalLabel').text("Realtime Information For Stop "+stopNo);
     var url='https://data.dublinked.ie/cgi-bin/rtpi/realtimebusinformation?stopid='+stopNo+'&maxresults=8'+'&format=json';
     $.getJSON(url,function (jsonData) {
 
@@ -103,7 +103,7 @@ function createTable(jsonData) {
     }
     else{
 
-        $('.modal-body').append("<p>Sorry! your search did not match any bus stops, please try again...</p>");
+        $('.modal-body').append("<p>Sorry! Realtime information is not available for this stop at the moment, Please try later...</p>");
     }
 
 
@@ -229,6 +229,7 @@ $(document).ready(function () {
         }
         else{
             $('#stop-search-btn').attr({'data-toggle':'modal','data-target':'#busModal'});
+
             getBusTime(stopNo,createTable);
         }
 
@@ -265,8 +266,8 @@ $(document).ready(function () {
     });
 
     $('#user-stop-no,#user-route-no').blur(function(){
-        $('#user-stop-no').attr('placeholder','Search by bus stop number or by address');
-        $('#user-route-no').attr('placeholder','Search by route');
+        $('#user-stop-no').attr('placeholder','Search by bus stop number or by address here..');
+        $('#user-route-no').attr('placeholder','Search by route route number here..');
     });
 
 
@@ -274,7 +275,7 @@ $(document).ready(function () {
 
 // .......On Clicking the modal close button bring the bus section into view and clear the input values.......
 
-    $('.modal-footer button').on('click',function(){
+    $('#busModal .modal-footer  button').on('click',function(){
 
         $('html, body').animate({
             scrollTop: $('#dublin-bus').offset().top
@@ -296,7 +297,18 @@ $(document).ready(function () {
         }, 1000);
     });
 
+    $('#user-stop-no').keyup(function (event) {
+        if(event.keyCode==13){
+            $('#stop-search-btn').click();
+        }
 
+    });
+    $('#user-route-no').keyup(function (event) {
+        if(event.keyCode==13){
+            $('#route-search-btn').click();
+        }
+
+    });
 
 });
 

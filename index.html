@@ -24,6 +24,7 @@
     <link href="css/scrolling-nav.css" rel="stylesheet">
     <!--Autocomplete input styling-->
     <link rel="stylesheet" href="css/jquery.autocomplete.css">
+    <link rel="stylesheet" href="css/footer.css">
 
     <!-- Your custom styles (optional) -->
     <link href="css/style.css" rel="stylesheet">
@@ -32,7 +33,7 @@
 
 <body >
 
-<!-- Start your project here-->
+<!--Start of modal for bus route directions-->
 <div id="user-selection-modal" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
@@ -50,20 +51,44 @@
 
     </div>
 </div>
+<!--start of modal for no train status-->
+
+<div id="no-status-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Sorry! Realtime information is not available for this station at the moment,Please try later...</h4>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
 
 <!-- start of  modal  for dublin bus time information-->
 <div class="modal fade" id="busModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header" id="modalheader">
-                <h3 class="modal-title" id="myModalLabel">Real Time Information</h3>
+                <h4 class="modal-title" id="myModalLabel"></h4>
+
 
                 <button type="button"  class=" btn btn-sm btn-default pull-right get-info-btn" ><span class="fa fa-refresh"></span>
                 </button>
 
 
+
             </div>
             <div class="modal-body">
+
 
 
             </div>
@@ -100,9 +125,7 @@
                 <li class="nav-item mr-5">
                     <a class="nav-link smoothScroll" href="#dublin-bike">Dublin Bike</a>
                 </li>
-                <li class="nav-item mr-5">
-                    <a class="nav-link smoothScroll" href="#contact">Contact</a>
-                </li>
+
 
             </ul>
 
@@ -134,22 +157,22 @@
 <section id="dublin-bus" class="bus-section d-flex" >
 
     <div class="container align-self-center">
-       <h1 class="sec-heading" > Dublin Bus Realtime Info</h1>
+        <h1 class="sec-heading" > Dublin Bus Realtime Info</h1>
         <div class="row">
 
 
-            <div class="md-form input-group col-md-6  ">
+            <div class="md-form  col-sm-6  ">
                 <label id="err-label-for-stopid-input" class="text-danger pl-sm-4 d-none">Please enter a stop number</label>
-                <input type="search"id="user-stop-no" class="form-control  " placeholder="Search by bus stop number or by address">
+                <input type="search"id="user-stop-no" class="form-control  " placeholder="Search by bus stop number or by address here..">
                 <span class="input-group-btn">
-        <button id="stop-search-btn" class="btn btn-default btn-lg get-info-btn " type="button"  data-toggle="modal"  data-target="#busModal"><i class="fa fa-search"></i> Search</button>
+        <button id="stop-search-btn" class=" col-sm-6 push-sm-3 btn btn-default btn-lg get-info-btn " type="button"  data-toggle="modal"  data-target="#busModal"><i class="fa fa-search"></i> Search</button>
     </span>
             </div>
-            <div class="md-form input-group col-md-6 ">
+            <div class="md-form  col-sm-6 ">
                 <label id="err-label-for-route-input" class="text-danger pl-sm-4 d-none">Please enter a route</label>
-                <input type="text" id="user-route-no" class="form-control" placeholder="Search by route no ">
+                <input type="text" id="user-route-no" class="form-control" placeholder="Search by  bus route number here.. ">
                 <span class="input-group-btn">
-        <button id="route-search-btn" class="btn btn-default btn-lg" type="button"  data-toggle="modal"  data-target="#user-selection-modal"><i class="fa fa-search"></i> Search</button>
+        <button id="route-search-btn" class="btn col-sm-6 push-sm-3 btn-default btn-lg" type="button"  data-toggle="modal"  data-target="#user-selection-modal"><i class="fa fa-search"></i> Search</button>
     </span>
             </div>
         </div>
@@ -182,11 +205,11 @@
         <h1 class="sec-heading" > Irish Rail Realtime Info</h1>
         <div class="row">
             <div class="col-lg-6 col-sm-12 push-lg-3">
-                <div class="md-form input-group">
+                <div class="md-form ">
                     <label id="err-label-for-station-input" class="text-danger pl-sm-4 d-none">Please enter a valid station name</label>
-                    <input  type="text" class="form-control"  id="user-station-name" placeholder="Search by station name">
+                    <input  type="text" class="form-control"  id="user-station-name" placeholder="Enter station name here...">
                     <span class="input-group-btn">
-        <button id="rail-search-btn"class="btn  btn-lg btn-default" type="button"><i class="fa fa-search"></i> Search</button>
+        <button id="rail-search-btn"class="btn col-sm-6 push-sm-3 btn-lg btn-default " type="button"><i class="fa fa-search"></i> Search</button>
       </span>
                 </div>
             </div>
@@ -218,26 +241,36 @@
 
 <!--&lt;!&ndash; Services Section &ndash;&gt;-->
 <!--<section id="dublin-bike" class="bike-section">-->
-    <!--<div class="container">-->
-        <!--<div class="row">-->
-            <!--<div class="col-lg-12">-->
-                <!--<h1>Dublin Bike</h1>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
+<!--<div class="container">-->
+<!--<div class="row">-->
+<!--<div class="col-lg-12">-->
+<!--<h1>Dublin Bike</h1>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
 <!--</section>-->
 
-<!-- Contact Section -->
-<section id="contact" class="contact-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1>Contact Section</h1>
-            </div>
-        </div>
+<!--Start of footer-->
+<footer class="footer">
+
+    <div class="footer-right">
+
+
+        <a href="https://twitter.com/intent/user?screen_name=miannaseem_11"><i class="fa fa-twitter"></i></a>
+
+        <a href="https://github.com/naseem11" target="_blank"><i class="fa fa-github"></i></a>
+
     </div>
-</section>
-<!-- /Start your project here-->
+
+    <div class="footer-left">
+
+        <p>Developed By Naseem </p>
+
+        <p>@ Code Institute &copy; 2017</p>
+    </div>
+
+</footer>
+
 
 <!-- SCRIPTS -->
 <!-- JQuery -->

@@ -48,9 +48,18 @@ $(document).ready(function () {
     $('#rail-search-btn').on('click',displayTrainStatus);
 
     $('#user-station-name').blur(function(){
-        $('#user-station-name').attr('placeholder','Search for live departure times for any station by name');
+        $('#user-station-name').attr('placeholder','Enter station name here..');
 
     });
+
+    $('#user-station-name').keyup(function (event) {
+        if(event.keyCode==13){
+            $('#rail-search-btn').click();
+        }
+
+    });
+    $('#no-status-modal button').on('click',closeTrainStatus);
+
 
 });
 
@@ -76,7 +85,7 @@ function displayTrainStatus() {
         var tableCaption=stationName;
         var tempArr=stationName.split(" ");
         stationName='';
-        console.log(stationName);
+
         for (i=0; i<tempArr.length;i++){
             stationName=stationName+tempArr[i]+"%20";
         }
@@ -99,7 +108,8 @@ function displayTrainStatus() {
 
                 if (statusJson['results']['ArrayOfObjStationData']['objStationData'] === undefined) {
 
-                    $('#err-label-for-station-input').removeClass('d-none');
+                    // $('#err-label-for-station-input').removeClass('d-none');
+                    $('#no-status-modal').modal('show');
                     $('#user-station-name').val('');
                 }
                 else {
@@ -108,14 +118,14 @@ function displayTrainStatus() {
                         scrollTop: $('#rail-timing-sec').offset().top
                     }, 1000);
 
-                    $('#train-status-table caption').text(tableCaption + " " +statusJson['results']['ArrayOfObjStationData']['objStationData'][0]['Traindate']+"("+statusJson['results']['ArrayOfObjStationData']['objStationData'][0]['Querytime']+")" ).append($('<button type="button" class="btn btn-default btn-sm pull-right"><i class="fa fa-close"></i> Close</button>')
+                    $('#train-status-table caption').text(tableCaption ).append($('<button type="button" class="btn btn-default btn-sm pull-right"><i class="fa fa-close"></i> Close</button>')
                         .on('click', closeTrainStatus));
 
                     // Checking if returned data(stationJson)is an object or array of objects
                     if (Object.prototype.toString.call(statusJson['results']['ArrayOfObjStationData']['objStationData']) === '[object Array]') {
 
                         // ......Sorting status data according to due time....
-                         statusJson=statusJson['results']['ArrayOfObjStationData']['objStationData'].sort(compare);
+                        statusJson=statusJson['results']['ArrayOfObjStationData']['objStationData'].sort(compare);
 
 
 
@@ -124,7 +134,7 @@ function displayTrainStatus() {
                             // checking if user station name is same as origin of a train then schedule arrival will be replaced by schedule departure and ETA with originaltime
 
                             if ($('#user-station-name').val() === statusJson[i]['Origin']) {
-                                $('#train-status-table tbody').append("<tr><td>" + statusJson[i]['Destination'] + "</td><td>" +
+                                $('#train-status-table tbody').append("<tr><td>" + statusJson[i]['Destination'] + "</td><td class='hidden-sm-down'>" +
                                     statusJson[i]['Origin'] + "</td><td>" +
                                     statusJson[i]['Schdepart'] + "</td><td>" +
                                     statusJson[i]['Origintime'] + "</td><td>" +
@@ -132,7 +142,7 @@ function displayTrainStatus() {
                                 );
                             }
                             else {
-                                $('#train-status-table tbody').append("<tr><td>" + statusJson[i]['Destination'] + "</td><td>" +
+                                $('#train-status-table tbody').append("<tr><td>" + statusJson[i]['Destination'] + "</td><td class='hidden-sm-down'>" +
                                     statusJson[i]['Origin'] + "</td><td>" +
                                     statusJson[i]['Scharrival'] + "</td><td>" +
                                     statusJson[i]['Exparrival'] + "</td><td>" +
@@ -142,9 +152,13 @@ function displayTrainStatus() {
                         }
                     }
                     else {
+
+
+                        statusJson=statusJson['results']['ArrayOfObjStationData']['objStationData'];
+
                         // checking if user station name is same as origin of a train then schedule arrival will be replaced by schedule departure and ETA with originaltime
                         if ($('#user-station-name').val() === statusJson['Origin']) {
-                            $('#train-status-table tbody').append("<tr><td>" + statusJson['Destination'] + "</td><td>" +
+                            $('#train-status-table tbody').append("<tr><td>" + statusJson['Destination'] + "</td><td class='hidden-sm-down'>" +
                                 statusJson['Origin'] + "</td><td>" +
                                 statusJson['Schdepart'] + "</td><td>" +
                                 statusJson['Origintime'] + "</td><td>" +
@@ -152,10 +166,11 @@ function displayTrainStatus() {
                             );
                         }
                         else {
-                            $('#train-status-table tbody').append("<tr><td>" + statusJson['Destination'] + "</td><td>" +
+
+                            $('#train-status-table tbody').append("<tr><td>" + statusJson['Destination'] + "</td><td class='hidden-sm-down'>" +
                                 statusJson['Origin'] + "</td><td>" +
                                 statusJson['Scharrival'] + "</td><td>" +
-                                statusJson['Exarrival'] + "</td><td>" +
+                                statusJson['Exparrival'] + "</td><td>" +
                                 statusJson['Duein'] + " min</td></tr>"
                             );
 
@@ -189,8 +204,8 @@ function closeTrainStatus() {
     clearStatusTable();
     $('#rail-timing-sec').addClass('d-none');
     $('html, body').animate({
-            scrollTop: $('#irish-rail').offset().top
-        }, 1000);
+        scrollTop: $('#irish-rail').offset().top
+    }, 1000);
     $('#user-station-name').val('');
 
 }
