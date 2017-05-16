@@ -1,27 +1,45 @@
 
 $(document).ready(function () {
- // ............Get the list of all stations.............
+    // ............Get the list of all stations.............
 
-    $.get('https://api.irishrail.ie/realtime/realtime.asmx/getAllStationsXML_WithStationType?StationType=A',function (xml) {
+    var yql_url = 'https://query.yahooapis.com/v1/public/yql';
+    var url = 'https://api.irishrail.ie/realtime/realtime.asmx/getAllStationsXML_WithStationType?StationType=A';
 
-        var stationsJson=$.xml2json(xml);
-        var stations=[];
-        for (i=0;i<stationsJson['objStation'].length; i++){
-            stations.push(stationsJson['objStation'][i]['StationDesc']);
-        }
-         // Removing Dublicate values from the array of station names
+    $.ajax({
+        'url': yql_url,
+        'data': {
+            'q': 'SELECT * FROM xml WHERE url="'+url+'"',
+            'format': 'xml'
 
-        stations=stations.filter(function (station,index,inputArray) {
-            return inputArray.indexOf(station) == index;
+        },
+        'dataType': 'xml',
+        'success': function(response) {
+
+            var stationsJson=$.xml2json(response);
+            var stations=[];
+            for (i=0;i<stationsJson['results']['ArrayOfObjStation']['objStation'].length; i++){
+                stations.push(stationsJson['results']['ArrayOfObjStation']['objStation'][i]['StationDesc']);
+            }
+
+            // Removing Dublicate values from the array of station names
+
+            stations=stations.filter(function (station,index,inputArray) {
+                return inputArray.indexOf(station) == index;
 
 
-        });
-
-         $("#user-station-name").autocomplete({
+            });
+            $("#user-station-name").autocomplete({
                 source:[stations]
 
             });
-     });
+
+
+        },
+    });
+
+
+
+
 
     $('#user-station-name').focus(function () {
         $('#err-label-for-station-input').addClass('d-none');
@@ -40,7 +58,7 @@ $(document).ready(function () {
 
 
 function displayTrainStatus() {
-   //.... if input field is empty....
+    //.... if input field is empty....
     if ($('#user-station-name').val() === '') {
         $('#err-label-for-station-input').removeClass('d-none');
 
@@ -52,78 +70,117 @@ function displayTrainStatus() {
         clearStatusTable();
 
 
+        var yql_url = 'https://query.yahooapis.com/v1/public/yql';
         var api = 'https://api.irishrail.ie/realtime/realtime.asmx/getStationDataByNameXML?StationDesc=';
         var stationName = $('#user-station-name').val();
+        var tableCaption=stationName;
+        var tempArr=stationName.split(" ");
+        stationName='';
+        console.log(stationName);
+        for (i=0; i<tempArr.length;i++){
+            stationName=stationName+tempArr[i]+"%20";
+        }
+
         var url = api + stationName;
-        $.get(url, function (xml) {
-            var statusJson = $.xml2json(xml);
 
-          // .....if user input unlknowm station name i.e json object is undefined....
 
-            if (statusJson['objStationData'] === undefined) {
+        $.ajax({
+            'url': yql_url,
+            'data': {
+                'q': 'SELECT * FROM xml WHERE url="'+url+'"',
+                'format': 'xml',
 
-                $('#err-label-for-station-input').removeClass('d-none');
-                $('#user-station-name').val('');
-            }
-            else {
-                $('#rail-timing-sec').removeClass('d-none');
-                $('html, body').animate({
-                    scrollTop: $('#rail-timing-sec').offset().top
-                }, 1000);
 
-                $('#train-status-table caption').text(stationName).append($('<button type="button" class="btn btn-success btn-sm pull-right"><i class="fa fa-close"></i> Close</button>')
-                    .on('click', closeTrainStatus));
+            },
+            'dataType': 'xml',
+            'success': function(response) {
+                var statusJson = $.xml2json(response);
+                // .....if user input unlknowm station name i.e json object is undefined....
 
-                // Checking if returned data(stationJson)is an object or array of objects
-                if (Object.prototype.toString.call(statusJson['objStationData']) === '[object Array]') {
+                if (statusJson['results']['ArrayOfObjStationData']['objStationData'] === undefined) {
 
-                    for (i = 0; i < statusJson['objStationData'].length; i++) {
+                    $('#err-label-for-station-input').removeClass('d-none');
+                    $('#user-station-name').val('');
+                }
+                else {
+                    $('#rail-timing-sec').removeClass('d-none');
+                    $('html, body').animate({
+                        scrollTop: $('#rail-timing-sec').offset().top
+                    }, 1000);
+
+                    $('#train-status-table caption').text(tableCaption + " " +statusJson['results']['ArrayOfObjStationData']['objStationData'][0]['Traindate']+"("+statusJson['results']['ArrayOfObjStationData']['objStationData'][0]['Querytime']+")" ).append($('<button type="button" class="btn btn-default btn-sm pull-right"><i class="fa fa-close"></i> Close</button>')
+                        .on('click', closeTrainStatus));
+
+                    // Checking if returned data(stationJson)is an object or array of objects
+                    if (Object.prototype.toString.call(statusJson['results']['ArrayOfObjStationData']['objStationData']) === '[object Array]') {
+
+                        // ......Sorting status data according to due time....
+                         statusJson=statusJson['results']['ArrayOfObjStationData']['objStationData'].sort(compare);
+
+
+
+
+                        for (i = 0; i < statusJson.length; i++) {
+                            // checking if user station name is same as origin of a train then schedule arrival will be replaced by schedule departure and ETA with originaltime
+
+                            if ($('#user-station-name').val() === statusJson[i]['Origin']) {
+                                $('#train-status-table tbody').append("<tr><td>" + statusJson[i]['Destination'] + "</td><td>" +
+                                    statusJson[i]['Origin'] + "</td><td>" +
+                                    statusJson[i]['Schdepart'] + "</td><td>" +
+                                    statusJson[i]['Origintime'] + "</td><td>" +
+                                    statusJson[i]['Duein'] + " min</td></tr>"
+                                );
+                            }
+                            else {
+                                $('#train-status-table tbody').append("<tr><td>" + statusJson[i]['Destination'] + "</td><td>" +
+                                    statusJson[i]['Origin'] + "</td><td>" +
+                                    statusJson[i]['Scharrival'] + "</td><td>" +
+                                    statusJson[i]['Exparrival'] + "</td><td>" +
+                                    statusJson[i]['Duein'] + " min</td></tr>"
+                                );
+                            }
+                        }
+                    }
+                    else {
                         // checking if user station name is same as origin of a train then schedule arrival will be replaced by schedule departure and ETA with originaltime
-
-                        if ($('#user-station-name').val() === statusJson['objStationData'][i]['Origin']) {
-                            $('#train-status-table tbody').append("<tr><td>" + statusJson['objStationData'][i]['Destination'] + "</td><td>" +
-                                statusJson['objStationData'][i]['Origin'] + "</td><td>" +
-                                statusJson['objStationData'][i]['Schdepart'] + "</td><td>" +
-                                statusJson['objStationData'][i]['Origintime'] + "</td><td>" +
-                                statusJson['objStationData'][i]['Duein'] + " min</td></tr>"
+                        if ($('#user-station-name').val() === statusJson['Origin']) {
+                            $('#train-status-table tbody').append("<tr><td>" + statusJson['Destination'] + "</td><td>" +
+                                statusJson['Origin'] + "</td><td>" +
+                                statusJson['Schdepart'] + "</td><td>" +
+                                statusJson['Origintime'] + "</td><td>" +
+                                statusJson['Duein'] + " min</td></tr>"
                             );
                         }
                         else {
-                            $('#train-status-table tbody').append("<tr><td>" + statusJson['objStationData'][i]['Destination'] + "</td><td>" +
-                                statusJson['objStationData'][i]['Origin'] + "</td><td>" +
-                                statusJson['objStationData'][i]['Scharrival'] + "</td><td>" +
-                                statusJson['objStationData'][i]['Exparrival'] + "</td><td>" +
-                                statusJson['objStationData'][i]['Duein'] + " min</td></tr>"
+                            $('#train-status-table tbody').append("<tr><td>" + statusJson['Destination'] + "</td><td>" +
+                                statusJson['Origin'] + "</td><td>" +
+                                statusJson['Scharrival'] + "</td><td>" +
+                                statusJson['Exarrival'] + "</td><td>" +
+                                statusJson['Duein'] + " min</td></tr>"
                             );
+
                         }
+
                     }
                 }
-                else {
-                    // checking if user station name is same as origin of a train then schedule arrival will be replaced by schedule departure and ETA with originaltime
-                    if ($('#user-station-name').val() === statusJson['objStationData']['Origin']) {
-                        $('#train-status-table tbody').append("<tr><td>" + statusJson['objStationData']['Destination'] + "</td><td>" +
-                            statusJson['objStationData']['Origin'] + "</td><td>" +
-                            statusJson['objStationData']['Schdepart'] + "</td><td>" +
-                            statusJson['objStationData']['Origintime'] + "</td><td>" +
-                            statusJson['objStationData']['Duein'] + " min</td></tr>"
-                        );
-                    }
-                    else {
-                        $('#train-status-table tbody').append("<tr><td>" + statusJson['objStationData']['Destination'] + "</td><td>" +
-                            statusJson['objStationData']['Origin'] + "</td><td>" +
-                            statusJson['objStationData']['Scharrival'] + "</td><td>" +
-                            statusJson['objStationData']['Exarrival'] + "</td><td>" +
-                            statusJson['objStationData']['Duein'] + " min</td></tr>"
-                        );
-
-                    }
-
-                }
-            }
 
 
 
+
+
+
+
+
+            },
         });
+
+
+
+
+
+
+
+
 
     }
 }
@@ -144,3 +201,8 @@ function clearStatusTable(){
 }
 
 
+function compare(a,b) {
+
+    return a['Duein']-b['Duein'];
+
+}

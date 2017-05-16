@@ -154,7 +154,7 @@ function createStopsTable(jsonData,direction){
 
         $('#stops-table tbody').append("<tr><td>"+jsonData['results'][direction]['stops'][i]['stopid']+"</td>" +
             "<td>"+jsonData['results'][direction]['stops'][i]['fullname']+"</td>" +
-            "<td >"+ "<button id='"+jsonData['results'][direction]['stops'][i]['stopid']+"' class='btn  btn-sm btn-primary' data-toggle='modal'  data-target='#busModal' type='button' onclick='getInfo(this)' >get info</button>"+"</td>" +
+            "<td >"+ "<button id='"+jsonData['results'][direction]['stops'][i]['stopid']+"' class='btn  btn-sm btn-outline-default' data-toggle='modal'  data-target='#busModal' type='button' onclick='getInfo(this)' >get info</button>"+"</td>" +
             "</tr>")
 
     }

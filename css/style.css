@@ -1,4 +1,4 @@
-/* YOUR CUSTOM STYLES */
+
 
 #stops-table  th,#train-status-table th{
 
@@ -13,7 +13,7 @@
 #cover-caption{
 
     width:85%;
-    font-family: Oswald;
+
 }
 .bg-white{
 
@@ -21,27 +21,41 @@
 
 }
 
-.modal-title{
 
-    color:#26a69a;
-    font-family: Oswald;
-}
 
 .modal-content{
 
     border-radius:10px;
 }
-
 #navbarNav1 a{
 
     font-size: 1.3rem;
-    font-family: Oswald;
 }
 
-.btn-success{
-    background-color: #00796b;
+
+
+#navbarNav1 a, .modal-title,#cover-caption, .heading, .sec-heading{
+
+
+    font-family: Oswald;
 }
-.navbar-brand,#navbarNav1 a {
+table caption{
+
+    font-size:2rem;
+}
+
+#train-status-table ,#stops-table{
+
+   margin-bottom: 5rem;
+}
+
+.sec-heading{
+    margin-bottom: 9rem;
+    font-size: 4rem;
+    color: #004d40;
+}
+
+.navbar-brand,#navbarNav1 a,.modal-title,.heading {
 
    color:#26a69a ;
 }
@@ -50,7 +64,15 @@
 
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(38, 166, 154, 1)' stroke-width='4' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
 }
+tr:nth-child(even) {
+    background: #c8e6c9;
 
+}
+thead{
+
+    background-color: dimgrey;
+    color:white;
+}
 
 
 @media (max-width: 768px) {
