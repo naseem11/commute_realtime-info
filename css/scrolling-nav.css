@@ -44,21 +44,6 @@ html {
     background: #eee;
 }
 
-.rail-section {
-    height: 100%;
-    padding-top: 150px;
-    text-align: center;
-    background: white;
-}
-.bike-section {
-    height: 100%;
-    padding-top: 150px;
-    text-align: center;
-    background: #fff;
-}
-
-
-
 .bus-route-section {
     /*height: 100%;*/
     padding-top: 150px;
@@ -66,9 +51,25 @@ html {
     background: #fff;
 }
 
+.rail-section {
+    height: 100%;
+    padding-top: 150px;
+    text-align: center;
+    background: white;
+}
+
+
+
 .rail-timing-section {
 
     padding-top: 150px;
     text-align: center;
     background: #fff;
+}
+
+.about-section {
+    height: 100%;
+    padding-top: 150px;
+    text-align: center;
+    background: #eee;
 }

@@ -86,7 +86,7 @@ function createTable(jsonData) {
 
         $('.modal-body').append("<table class='table' id='time-info-table'>" +
             "<thead>" +
-            "<tr><th>Bus</th><th>Destination</th><th>Time (mins) </th></tr>" +
+            "<tr><th>Bus</th><th>Destination</th><th>Due in  </th></tr>" +
             "</thead>" +
             "<tbody>" +
             "</tbody>" +
@@ -96,7 +96,7 @@ function createTable(jsonData) {
 
             $('#time-info-table tbody').append("<tr><td>"+jsonData['results'][i]['route']+"</td>" +
                 "<td>"+jsonData['results'][i]['destination']+"</td>" +
-                "<td >"+jsonData['results'][i]['duetime']+"</td>" +
+                "<td >"+jsonData['results'][i]['duetime']+" (mins)</td>" +
                 "</tr>")
 
         }
@@ -183,6 +183,7 @@ function getInfo(event){
 function displayAllStops(event){
 
     $('#bus-route-sec').removeClass('d-none');
+    $('#user-route-no').val('');
     $('html, body').animate({
         scrollTop: $('#bus-route-sec').offset().top
     }, 1000);
@@ -262,12 +263,18 @@ $(document).ready(function () {
 
     $('#user-stop-no,#user-route-no').focus(function(){
         $('#err-label-for-stopid-input,#err-label-for-route-input').addClass('d-none');
+        if(event.target.id==='user-stop-no')
+            $('#user-stop-no').attr('placeholder','');
+        if(event.target.id==='user-route-no')
+            $('#user-route-no').attr('placeholder','');
+
 
     });
 
+
     $('#user-stop-no,#user-route-no').blur(function(){
-        $('#user-stop-no').attr('placeholder','Search by bus stop number or by address here..');
-        $('#user-route-no').attr('placeholder','Search by route route number here..');
+        $('#user-stop-no').attr('placeholder','Search by bus stop number or by address');
+        $('#user-route-no').attr('placeholder','Search by route route number ');
     });
 
 

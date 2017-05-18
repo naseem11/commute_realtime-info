@@ -13,20 +13,14 @@
     <!--Google fonts-->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Satisfy">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Oswald">
-
-
-
     <!-- Material Design Bootstrap -->
-
     <link href="css/mdb.min.css" rel="stylesheet">
-
     <!--Scrolling Nav css -->
     <link href="css/scrolling-nav.css" rel="stylesheet">
     <!--Autocomplete input styling-->
     <link rel="stylesheet" href="css/jquery.autocomplete.css">
     <link rel="stylesheet" href="css/footer.css">
-
-    <!-- Your custom styles (optional) -->
+    <!--  Custom styles  -->
     <link href="css/style.css" rel="stylesheet">
 
 </head>
@@ -103,7 +97,7 @@
 <!--Navbar-->
 <nav class="navbar fixed-top navbar-toggleable-md scrolling-navbar  bg-white ">
     <a class="navbar-brand smoothScroll pl-3 " href="#intro">
-        <span class="fa fa-subway fa-2x "></span>
+        <i class="fa fa-subway fa-2x  "></i> <span class="satisy-font">Realtimer</span>
     </a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav1" aria-controls="navbarNav1" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -122,9 +116,11 @@
                 <li class="nav-item mr-5">
                     <a class="nav-link smoothScroll" href="#irish-rail"><i class="fa fa-subway"></i> Irish Rail</a>
                 </li>
-                <li class="nav-item mr-5">
-                    <a class="nav-link smoothScroll" href="#dublin-bike">Dublin Bike</a>
+                 <li class="nav-item mr-5">
+                    <a class="nav-link smoothScroll" href="#about"><i class="fa fa-info-circle"></i> About</a>
                 </li>
+
+
 
 
             </ul>
@@ -143,7 +139,7 @@
         <div class="container ">
             <div class="col-sm-10 push-sm-2 ">
                 <h1 class="display-3 animated fadeInDown">Realtime Information </h1>
-                <p  class="mb-2  " style="font-size:x-large">Get the realtime information for Dublin bus or train...</p>
+                <p  class="mb-2  " style="font-size:x-large">Get the realtime information for Dublin bus and Irish rail...</p>
 
                 <button id="cover-bus-btn" type="button" class="btn  btn-outline-white  animated fadeInLeft"> <i class=" fa  fa-bus ">&nbsp; Dublin bus</i></button>
                 <button id="cover-train-btn" type="button" class="btn  btn-outline-white animated fadeInRight"><i class=" fa  fa-subway ">&nbsp; Irish rail</i></button>
@@ -163,14 +159,14 @@
 
             <div class="md-form  col-sm-6  ">
                 <label id="err-label-for-stopid-input" class="text-danger pl-sm-4 d-none">Please enter a stop number</label>
-                <input type="search"id="user-stop-no" class="form-control  " placeholder="Search by bus stop number or by address here..">
+                <input type="search"id="user-stop-no" class="form-control  " placeholder="Search by bus stop number or by address">
                 <span class="input-group-btn">
         <button id="stop-search-btn" class=" col-sm-6 push-sm-3 btn btn-default btn-lg get-info-btn " type="button"  data-toggle="modal"  data-target="#busModal"><i class="fa fa-search"></i> Search</button>
     </span>
             </div>
             <div class="md-form  col-sm-6 ">
                 <label id="err-label-for-route-input" class="text-danger pl-sm-4 d-none">Please enter a route</label>
-                <input type="text" id="user-route-no" class="form-control" placeholder="Search by  bus route number here.. ">
+                <input type="text" id="user-route-no" class="form-control" placeholder="Search by  bus route number ">
                 <span class="input-group-btn">
         <button id="route-search-btn" class="btn col-sm-6 push-sm-3 btn-default btn-lg" type="button"  data-toggle="modal"  data-target="#user-selection-modal"><i class="fa fa-search"></i> Search</button>
     </span>
@@ -239,16 +235,21 @@
     </div>
 </section>
 
-<!--&lt;!&ndash; Services Section &ndash;&gt;-->
-<!--<section id="dublin-bike" class="bike-section">-->
-<!--<div class="container">-->
-<!--<div class="row">-->
-<!--<div class="col-lg-12">-->
-<!--<h1>Dublin Bike</h1>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</section>-->
+
+<section id="about" class="about-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="sec-heading">About</h1>
+                <p>This application provides the realtime information for Dublin bus service .It gives the list of buses with their due times for  any bus stop searched by the user.<br>
+                   There are three ways to get the real time information , by stop number like 312, by address like Wellington Quey or by route number like 25A ,7 etc. </p>
+               <p>You can also get the realtime information for Irish rail service.You just need to enter the station name to get the status of all trains serving that station </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
 
 <!--Start of footer-->
 <footer class="footer">
@@ -285,10 +286,8 @@
 <script src="js/smoothscroll.js"></script>
 <!--xml2json JavaScript-->
 <script src="js/jquery.xml2json.js"></script>
-
 <!--Autocomplete JS-->
 <script src="js/jquery.autocomplete.js"></script>
-
 <!-- Dublin Bus JavaScript -->
 <script src="js/dublin-bus.js"></script>
 <script src="js/irishrail.js"></script>

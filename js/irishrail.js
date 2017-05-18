@@ -43,6 +43,7 @@ $(document).ready(function () {
 
     $('#user-station-name').focus(function () {
         $('#err-label-for-station-input').addClass('d-none');
+         $('#user-station-name').attr('placeholder','')
 
     });
     $('#rail-search-btn').on('click',displayTrainStatus);
