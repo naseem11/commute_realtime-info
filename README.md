@@ -2,7 +2,7 @@
 
 # What is Realtimer?
 
-This application provides the realtime information for Dublin bus and Irish rail service for any bus stop or station.
+This application provides the realtime information for Dublin bus and Irish rail service for any bus stop or station.To get this information it uses Dublin bus and Irish rail realtime API.
 
 # How it works?
 
@@ -38,6 +38,16 @@ Status of the trains can be searched simply by station name.Say user want to get
 status of trains at Blackroc station.
 
 ![trainsstatus](https://cloud.githubusercontent.com/assets/22799847/26244989/03522530-3c8a-11e7-86d6-4b717c2b291f.PNG)
+
+## Please Note
+
+This application uses Dublin bus and Irish rail api to get the status of buses and trains.Sometimes the response from these APIs can be slow so the performance of this app could be slow.
+
+## Technologies Used
+
+* Languages : * HTML , CSS , JavaScript
+
+
 
 
 
