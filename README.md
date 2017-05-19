@@ -45,7 +45,7 @@ This application uses Dublin bus and Irish rail api to get the status of buses a
 
 ## Technologies Used
 
-** Languages : **  HTML , CSS , JavaScript
+**Languages :**  HTML , CSS , JavaScript
 
 **Frameworks :** Bootstrap , Material Design Bootstrap
 
