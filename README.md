@@ -25,12 +25,18 @@ or user can select the route and then the direction of buses on that route .
 
 ![busdirection](https://cloud.githubusercontent.com/assets/22799847/26244982/0337251e-3c8a-11e7-909e-d65aca3ce0fe.PNG)
 
-Selection of the direction will give the list of all the stops on that direction. user can select any stop to get the info.
+Selection of the direction will give the list of all the stops in that direction, user can select any stop to get the info.
 
 ![directionstops](https://cloud.githubusercontent.com/assets/22799847/26244986/03402a74-3c8a-11e7-85bf-3f55d4a04a8a.PNG)
 
+## Getting Information for Irish Rail
 
-![irishrail](https://cloud.githubusercontent.com/assets/22799847/26244984/033cc776-3c8a-11e7-9024-ca48a74dee24.PNG)
+Status of the trains can be searched simply by station name.Say user want to get the status of trains at Blackrock station.
+
+![irishrail](https://cloud.githubusercontent.com/assets/22799847/26246392/d59d4fa0-3c90-11e7-8f53-39dbe07548dd.PNG)
+
+status of trains at Blackroc station.
+
 ![trainsstatus](https://cloud.githubusercontent.com/assets/22799847/26244989/03522530-3c8a-11e7-86d6-4b717c2b291f.PNG)
 
 
