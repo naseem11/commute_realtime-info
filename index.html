@@ -11,9 +11,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <!--Google fonts-->
+    <!--Google fonts and icons-->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Satisfy">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Oswald">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Material Design Bootstrap -->
     <link href="css/mdb.min.css" rel="stylesheet">
     <!--Scrolling Nav css -->
@@ -48,7 +49,7 @@
 </div>
 <!--start of modal for no train status-->
 
-<div id="no-status-modal" class="modal fade" role="dialog">
+<div id="status-modal" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
 
@@ -67,6 +68,35 @@
 
     </div>
 </div>
+
+<!--start of modal for  dublin bikes status -->
+
+
+<div id="bikes-status-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title"></h4>
+            </div>
+             <div class="modal-body">
+
+
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
 
 <!-- start of  modal  for dublin bus time information-->
 <div class="modal fade" id="busModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -118,6 +148,9 @@
                     <a class="nav-link smoothScroll" href="#irish-rail"><i class="fa fa-subway"></i> Irish Rail</a>
                 </li>
                  <li class="nav-item mr-5">
+                    <a class="nav-link smoothScroll" href="#dublin-bike"><i class="material-icons" >directions_bike</i> Dublin Bike</a>
+                </li>
+                <li class="nav-item mr-5">
                     <a class="nav-link smoothScroll" href="#about"><i class="fa fa-info-circle"></i> About</a>
                 </li>
 
@@ -135,15 +168,16 @@
 
 
 <!-- Intro Section -->
-<section id="intro" class="intro-section d-flex align-items-center ">
+<section id="intro" class=" section intro-section d-flex align-items-center ">
     <div id="cover-caption"   >
         <div class="container ">
             <div class="col-sm-10 push-sm-2 ">
-                <h1 class="display-3 animated fadeInDown">Realtime Information </h1>
-                <p  class="mb-2  " style="font-size:x-large">Get the realtime information for Dublin bus and Irish rail...</p>
+                <h1 class=" display-3 animated fadeInDown mb-2  ">Realtimer </h1>
+                <p  class="mb-2  " style="font-size:x-large">Get the realtime information for Dublin bus, Irish rail and Dublin bike...</p>
 
-                <button id="cover-bus-btn" type="button" class="btn  btn-outline-white  animated fadeInLeft"> <i class=" fa  fa-bus ">&nbsp; Dublin bus</i></button>
-                <button id="cover-train-btn" type="button" class="btn  btn-outline-white animated fadeInRight"><i class=" fa  fa-subway ">&nbsp; Irish rail</i></button>
+                <button id="cover-bus-btn" type="button" class="btn  btn-outline-white  animated fadeInLeft "> <i class=" fa  fa-bus ">&nbsp; Dublin bus </i></button>
+                <button id="cover-train-btn" type="button" class="btn  btn-outline-white animated fadeInDown "><i class=" fa  fa-subway "> &nbsp; Irish rail  </i></button>
+                 <button id="cover-bike-btn" type="button" class="btn  btn-outline-white animated fadeInRight "><i class=" fa  fa-bicycle ">&nbsp; Dublin Bike</i></button>
             </div>
         </div>
 
@@ -151,7 +185,7 @@
 
 </section>
 <!-- Dublin Bus  Section -->
-<section id="dublin-bus" class="bus-section d-flex" >
+<section id="dublin-bus" class=" section bus-section d-flex" >
 
     <div class="container align-self-center">
         <h1 class="sec-heading" > Dublin Bus Realtime Info</h1>
@@ -178,7 +212,7 @@
 </section>
 
 <!--Bus route Section-->
-<section id="bus-route-sec" class="bus-route-section d-none   ">
+<section id="bus-route-sec" class=" section bus-route-section d-none   ">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -197,7 +231,7 @@
 </section>
 
 <!-- Irishrail Section -->
-<section id="irish-rail" class="rail-section d-flex ">
+<section id="irish-rail" class=" section rail-section d-flex ">
     <div class="container align-self-center ">
         <h1 class="sec-heading" > Irish Rail Realtime Info</h1>
         <div class="row">
@@ -214,8 +248,8 @@
     </div>
 </section>
 
-<!--Rain timing info Section-->
-<section id="rail-timing-sec" class="rail-timing-section d-none">
+<!--Rail timing info Section -->
+<section id="rail-timing-sec" class=" section rail-timing-section d-none">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -236,15 +270,33 @@
     </div>
 </section>
 
+ <!--Dublin Bikes Section-->
+<section id="dublin-bike" class=" section  bike-section  d-flex">
+    <div class="container align-self-center">
+         <h1 class="sec-heading">Dublin Bike Realtime Info</h1>
+        <div class="row">
+              <div class="col-lg-6 col-sm-12 push-lg-3">
+                <div class="md-form ">
+                    <label id="err-label-for-bike-station-input" class="text-danger pl-sm-4 d-none">Please enter a valid station name or number</label>
+                    <input  type="text" class="form-control"  id="user-bike-station-name" placeholder="Search by station number or by address">
+                    <span class="input-group-btn">
+        <button id="bike-search-btn"class="btn col-sm-6 push-sm-3 btn-lg btn-default " type="button" data-toggle="modal" data-target="#bikes-status-modal"><i class="fa fa-search"></i> Search</button>
+      </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-<section id="about" class="about-section">
+<!--About Section-->
+<section id="about" class=" section about-section">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="sec-heading">About</h1>
-                <p>This application provides the realtime information for Dublin bus service .It gives the list of buses with their due times for  any bus stop searched by the user.<br>
-                   There are three ways to get the real time information , by stop number like 312, by address like Wellington Quey or by route number like 25A ,7 etc. </p>
-               <p>You can also get the realtime information for Irish rail service.You just need to enter the station name to get the status of all trains serving that station </p>
+                <p class="text-left">This application provides the realtime information for Dublin bus service .It gives the list of buses with their due times for  any bus stop searched by the user.<br><br>
+                    There are three ways to get the real time information , by stop number like 312, by address like Wellington Quey or by route number like 25A ,7 etc. </p>
+                <p class="text-left">You can also get the realtime information for Irish rail service.You just need to enter the station name to get the status of all trains serving that station </p>
             </div>
         </div>
     </div>
@@ -291,7 +343,11 @@
 <script src="js/jquery.autocomplete.js"></script>
 <!-- Dublin Bus JavaScript -->
 <script src="js/dublin-bus.js"></script>
-<script src="js/irishrail.js"></script>
+<!--Irish rail JavaScript-->
+<script src="js/irish-rail.js"></script>
+ <!--Dublin Bike JavaScript-->
+<script src="js/dublin-bike.js"></script>
+
 
 
 

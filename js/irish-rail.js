@@ -59,7 +59,7 @@ $(document).ready(function () {
         }
 
     });
-    $('#no-status-modal button').on('click',closeTrainStatus);
+    $('#status-modal button').on('click',closeTrainStatus);
 
 
 });
@@ -109,8 +109,8 @@ function displayTrainStatus() {
 
                 if (statusJson['results']['ArrayOfObjStationData']['objStationData'] === undefined) {
 
-                    // $('#err-label-for-station-input').removeClass('d-none');
-                    $('#no-status-modal').modal('show');
+
+                    $('#status-modal').modal('show');
                     $('#user-station-name').val('');
                 }
                 else {

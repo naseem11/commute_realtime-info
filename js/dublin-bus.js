@@ -40,7 +40,15 @@ $(window).on('load', function () {
 
     });
 
-})
+});
+$(window).on('resize', function() {
+    if($(window).width() <768) {
+        $('#cover-bus-btn,#cover-bike-btn,#cover-train-btn').addClass('btn-block');
+
+    }else{
+       $('#cover-bus-btn,#cover-bike-btn,#cover-train-btn').removeClass('btn-block');
+    }
+});
 
 
 
@@ -301,6 +309,11 @@ $(document).ready(function () {
     $('#cover-train-btn').click(function () {
         $('html, body').animate({
             scrollTop: $('#irish-rail').offset().top
+        }, 1000);
+    });
+     $('#cover-bike-btn').click(function () {
+        $('html, body').animate({
+            scrollTop: $('#dublin-bike').offset().top
         }, 1000);
     });
 

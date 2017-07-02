@@ -24,52 +24,42 @@ html {
 }
 
 
+.section{
 
-.intro-section {
     height: 100%;
     padding-top: 150px;
     text-align: center;
+}
+
+.intro-section {
     background:#004d40 ;
     background-size:cover;
     color:white;
+    margin-bottom: 0;
 
 
 }
 
 
-.bus-section{
-    height: 100%;
-    padding-top: 150px;
-    text-align: center;
+.bus-section ,.bike-section{
+
     background: #eee;
 }
 
-.bus-route-section {
-    /*height: 100%;*/
-    padding-top: 150px;
-    text-align: center;
+.bus-route-section,.rail-section,.rail-timing-section,.about-section {
+
     background: #fff;
 }
 
-.rail-section {
-    height: 100%;
-    padding-top: 150px;
-    text-align: center;
-    background: white;
+.bus-route-section,.rail-timing-section {
+
+    height: auto;
+
+
 }
 
 
 
-.rail-timing-section {
 
-    padding-top: 150px;
-    text-align: center;
-    background: #fff;
-}
 
-.about-section {
-    height: 100%;
-    padding-top: 150px;
-    text-align: center;
-    background: #eee;
-}
+
