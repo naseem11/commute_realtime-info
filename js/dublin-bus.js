@@ -1,83 +1,150 @@
+$(window).on('load', function() {
 
-$(window).on('load', function () {
+
+
     // ......................Retrieving list of all the stops....................
+    var yql_url = 'https://query.yahooapis.com/v1/public/yql';
 
-    $.getJSON('https://data.dublinked.ie/cgi-bin/rtpi/busstopinformation?&format=json',function (jsonData) {
+    $.ajax({
+        'url': yql_url,
+        'data': {
+            'q': 'SELECT * FROM json WHERE url="https://data.dublinked.ie/cgi-bin/rtpi/busstopinformation?operator=bac&format=json"',
+            'format': 'json'
 
-        var listOfStops=[];
-        for (i=0;i<jsonData['numberofresults'];i++){
+        },
+        'dataType': 'json',
+        'success': function(jsonData) {
 
-            listOfStops.push(jsonData['results'][i]['stopid']+"  , " +jsonData['results'][i]['fullname']);
-        }
 
-        $("#user-stop-no").autocomplete({
-            source:[listOfStops]
+            var listOfStops = [];
 
-        });
+            for (i = 0; i < jsonData['query']['results']['json']['numberofresults']; i++) {
+
+
+
+                listOfStops.push(jsonData['query']['results']['json']['results'][i]['stopid'] + "  , " + jsonData['query']['results']['json']['results'][i]['fullname']);
+            }
+
+            $("#user-stop-no").autocomplete({
+                source: [listOfStops]
+
+            });
+        },
 
     });
+
+
+
 
     // .....................Retrieving list of all routes ...................
 
-    $.getJSON('https://data.dublinked.ie/cgi-bin/rtpi/routelistinformation?operator=bac&format=json',function (jsonData) {
 
-        var listOfRoutes=[];
-        for (i=0;i<jsonData['results'].length;i++){
 
-            // Only push those routes to the list which are  starting with a digit
-            if(/^\d/.test(jsonData['results'][i]['route'])){
+    $.ajax({
+        'url': yql_url,
+        'data': {
+            'q': 'SELECT * FROM json WHERE url="https://data.dublinked.ie/cgi-bin/rtpi/routelistinformation?operator=bac&format=json"',
+            'format': 'json'
 
-                listOfRoutes.push(jsonData['results'][i]['route']);
+        },
+        'dataType': 'json',
+        'success': function(jsonData) {
+
+
+            var listOfRoutes = [];
+            for (i = 0; i < jsonData['query']['results']['json']['numberofresults']; i++) {
+
+                // Only push those routes to the list which are  starting with a digit
+                if (/^\d/.test(jsonData['query']['results']['json']['results'][i]['route'])) {
+
+                    listOfRoutes.push(jsonData['query']['results']['json']['results'][i]['route']);
+                }
+
+
             }
 
+            $("#user-route-no").autocomplete({
+                source: [listOfRoutes]
 
-        }
+            });
 
-        $("#user-route-no").autocomplete({
-            source:[listOfRoutes]
 
-        });
 
+        },
     });
 
+
 });
+
+
 $(window).on('resize', function() {
-    if($(window).width() <768) {
+    if ($(window).width() < 768) {
         $('#cover-bus-btn,#cover-bike-btn,#cover-train-btn').addClass('btn-block');
 
-    }else{
-       $('#cover-bus-btn,#cover-bike-btn,#cover-train-btn').removeClass('btn-block');
+    } else {
+        $('#cover-bus-btn,#cover-bike-btn,#cover-train-btn').removeClass('btn-block');
     }
 });
 
 
 
 
+function getBusTime(stopNo, createTableCallback) {
+
+    $('#myModalLabel').text("Realtime Information For Stop " + stopNo);
+    var yql_url = 'https://query.yahooapis.com/v1/public/yql';
+    var url = 'https://data.dublinked.ie/cgi-bin/rtpi/realtimebusinformation?stopid=' + stopNo + '&maxresults=8' + '&format=json';
+    $.ajax({
+        'url': yql_url,
+        'data': {
+            'q': 'SELECT * FROM json WHERE url="' + url + '"',
+            'format': 'json'
+
+        },
+        'dataType': 'json',
+        'success': function(jsonData) {
+
+            createTableCallback(jsonData);
 
 
 
-function getBusTime(stopNo,createTableCallback){
 
-    $('#myModalLabel').text("Realtime Information For Stop "+stopNo);
-    var url='https://data.dublinked.ie/cgi-bin/rtpi/realtimebusinformation?stopid='+stopNo+'&maxresults=8'+'&format=json';
-    $.getJSON(url,function (jsonData) {
-
-
-        createTableCallback(jsonData);
+        },
 
     });
 
 }
 
 
-function getRouteInfo(routeNo, dispplayRouteDirectionsCallback){
+function getRouteInfo(routeNo, dispplayRouteDirectionsCallback) {
 
-    var url='https://data.dublinked.ie/cgi-bin/rtpi/routeinformation?routeid='+routeNo+'&operator=bac'+'&format=json';
-    $.getJSON(url,function(jsonData){
 
-        dispplayRouteDirectionsCallback(jsonData);
+
+    var yql_url = 'https://query.yahooapis.com/v1/public/yql';
+    var url = 'https://data.dublinked.ie/cgi-bin/rtpi/routeinformation?routeid=' + routeNo + '&operator=bac' + '&format=json';
+
+    $.ajax({
+        'url': yql_url,
+        'data': {
+            'q': 'SELECT * FROM json WHERE url="' + url + '"',
+            'format': 'json'
+
+        },
+
+        'success': function(jsonData) {
+
+
+
+            dispplayRouteDirectionsCallback(jsonData);
+
+
+
+
+        },
 
     });
+
+
 }
 
 
@@ -85,10 +152,12 @@ function getRouteInfo(routeNo, dispplayRouteDirectionsCallback){
 
 function createTable(jsonData) {
 
+    var jsonData = jsonData['query']['results']['json'];
+
 
     clearExistingData();
 
-    if  (!jsonData['errormessage']&& jsonData['numberofresults']!==0){
+    if (!jsonData['errormessage'] && jsonData['numberofresults'] !== 0) {
 
 
 
@@ -100,16 +169,15 @@ function createTable(jsonData) {
             "</tbody>" +
             "</table>");
 
-        for(i=0;i<jsonData['numberofresults'];i++){
+        for (i = 0; i < jsonData['numberofresults']; i++) {
 
-            $('#time-info-table tbody').append("<tr><td>"+jsonData['results'][i]['route']+"</td>" +
-                "<td>"+jsonData['results'][i]['destination']+"</td>" +
-                "<td >"+jsonData['results'][i]['duetime']+" (mins)</td>" +
+            $('#time-info-table tbody').append("<tr><td>" + jsonData['results'][i]['route'] + "</td>" +
+                "<td>" + jsonData['results'][i]['destination'] + "</td>" +
+                "<td >" + jsonData['results'][i]['duetime'] + " (mins)</td>" +
                 "</tr>")
 
         }
-    }
-    else{
+    } else {
 
         $('.modal-body').append("<p>Sorry! Realtime information is not available for this stop at the moment, Please try later...</p>");
     }
@@ -124,23 +192,23 @@ function createTable(jsonData) {
 // .................. Start of dispalyRouteDirections Function..................
 
 
-function dispalyRouteDirections (jsonData) {
+function dispalyRouteDirections(jsonData) {
+
+    var jsonData = jsonData['query']['results']['json'];
 
 
-
-    if(!jsonData['errormessage'] && jsonData['numberofresults']!==0){
+    if (!jsonData['errormessage'] && jsonData['numberofresults'] !== 0) {
         $('.modal-body').addClass('list-group');
-        var directionOne=$("<a href='' data-dismiss='modal' id='direction-one' class='list-group-item'> From "+jsonData['results'][0]['origin']+" To " + jsonData['results'][0]['destination']+"</a>")
-            .on('click',jsonData, displayAllStops);
-        var directionTwo=$("<a href='' data-dismiss='modal' id='direction-two' class='list-group-item'> From "+jsonData['results'][1]['origin']+" To " + jsonData['results'][1]['destination']+"</a>")
-            .on('click',jsonData, displayAllStops);
+        var directionOne = $("<a href='' data-dismiss='modal' id='direction-one' class='list-group-item'> From " + jsonData['results'][0]['origin'] + " To " + jsonData['results'][0]['destination'] + "</a>")
+            .on('click', jsonData, displayAllStops);
+        var directionTwo = $("<a href='' data-dismiss='modal' id='direction-two' class='list-group-item'> From " + jsonData['results'][1]['origin'] + " To " + jsonData['results'][1]['destination'] + "</a>")
+            .on('click', jsonData, displayAllStops);
 
 
         $('#user-selection-modal .modal-body').append(directionOne);
         $('#user-selection-modal .modal-body').append(directionTwo);
 
-    }
-    else{
+    } else {
 
         $('.modal-body').append("<p>Sorry! your search did not match any route, please try again...</p>");
     }
@@ -151,18 +219,19 @@ function dispalyRouteDirections (jsonData) {
 
 // ................... End of dispalyRouteDirections Function...........................
 
+
 // ...............Start of createStopsTable function....................
 
-function createStopsTable(jsonData,direction){
+function createStopsTable(jsonData, direction) {
     clearStopsTable();
 
 
 
-    for(i=0;i<jsonData['results'][direction]['stops'].length;i++){
+    for (i = 0; i < jsonData['results'][direction]['stops'].length; i++) {
 
-        $('#stops-table tbody').append("<tr><td>"+jsonData['results'][direction]['stops'][i]['stopid']+"</td>" +
-            "<td>"+jsonData['results'][direction]['stops'][i]['fullname']+"</td>" +
-            "<td >"+ "<button id='"+jsonData['results'][direction]['stops'][i]['stopid']+"' class='btn  btn-sm btn-outline-default' data-toggle='modal'  data-target='#busModal' type='button' onclick='getInfo(this)' >get info</button>"+"</td>" +
+        $('#stops-table tbody').append("<tr><td>" + jsonData['results'][direction]['stops'][i]['stopid'] + "</td>" +
+            "<td>" + jsonData['results'][direction]['stops'][i]['fullname'] + "</td>" +
+            "<td >" + "<button id='" + jsonData['results'][direction]['stops'][i]['stopid'] + "' class='btn  btn-sm btn-outline-default' data-toggle='modal'  data-target='#busModal' type='button' onclick='getInfo(this)' >get info</button>" + "</td>" +
             "</tr>")
 
     }
@@ -172,23 +241,21 @@ function createStopsTable(jsonData,direction){
 
 }
 
-function getInfo(event){
+function getInfo(event) {
 
 
 
 
-    var stopNo=event.id;
+    var stopNo = event.id;
     $('#user-stop-no').val(stopNo);
-    getBusTime(stopNo,createTable);
-
-
+    getBusTime(stopNo, createTable);
 
 
 
 
 }
 
-function displayAllStops(event){
+function displayAllStops(event) {
 
     $('#bus-route-sec').removeClass('d-none');
     $('#user-route-no').val('');
@@ -196,11 +263,10 @@ function displayAllStops(event){
         scrollTop: $('#bus-route-sec').offset().top
     }, 1000);
 
-    if(event.target.id==='direction-one') {
+    if (event.target.id === 'direction-one') {
         $('#stops-table caption').text(event.target.text);
         createStopsTable(event.data, 0);
-    }
-    else {
+    } else {
         createStopsTable(event.data, 1);
     }
 
@@ -211,11 +277,12 @@ function displayAllStops(event){
 
 // .........clearExistingData Function....................
 
-function clearExistingData(){
+function clearExistingData() {
 
     $('.modal-body').empty();
 
 }
+
 function clearStopsTable() {
 
     $('#stops-table tbody').empty();
@@ -225,21 +292,26 @@ function clearStopsTable() {
 
 // ................End of clearExistingData Function............
 
-$(document).ready(function () {
+$(document).ready(function() {
 
-    $('.get-info-btn').click(function () {
-        var stopNo=$('#user-stop-no').val().split(",")[0].trim();
-        if(stopNo===""){
+    $('.get-info-btn').click(function() {
+        var stopNo = $('#user-stop-no').val().split(",")[0].trim();
+        if (stopNo === "") {
 
             $('#err-label-for-stopid-input').removeClass('d-none');
-            $('#user-stop-no').attr('placeholder','');
-            $('#stop-search-btn').attr({'data-toggle':'','data-target':''});
+            $('#user-stop-no').attr('placeholder', '');
+            $('#stop-search-btn').attr({
+                'data-toggle': '',
+                'data-target': ''
+            });
 
-        }
-        else{
-            $('#stop-search-btn').attr({'data-toggle':'modal','data-target':'#busModal'});
+        } else {
+            $('#stop-search-btn').attr({
+                'data-toggle': 'modal',
+                'data-target': '#busModal'
+            });
 
-            getBusTime(stopNo,createTable);
+            getBusTime(stopNo, createTable);
         }
 
 
@@ -247,19 +319,24 @@ $(document).ready(function () {
     });
 
 
-    $("#route-search-btn").click(function () {
-        var routeNo= $('#user-route-no').val();
-        if(routeNo===""){
+    $("#route-search-btn").click(function() {
+        var routeNo = $('#user-route-no').val();
+        if (routeNo === "") {
 
             $('#err-label-for-route-input').removeClass('d-none');
-            $('#user-route-no').attr('placeholder','');
-            $('#route-search-btn').attr({'data-toggle':'','data-target':''});
+            $('#user-route-no').attr('placeholder', '');
+            $('#route-search-btn').attr({
+                'data-toggle': '',
+                'data-target': ''
+            });
 
-        }
-        else{
-            $('#route-search-btn').attr({'data-toggle':'modal','data-target':'#user-selection-modal'});
+        } else {
+            $('#route-search-btn').attr({
+                'data-toggle': 'modal',
+                'data-target': '#user-selection-modal'
+            });
             clearExistingData();
-            getRouteInfo(routeNo,dispalyRouteDirections);
+            getRouteInfo(routeNo, dispalyRouteDirections);
         }
 
 
@@ -269,28 +346,28 @@ $(document).ready(function () {
 
 
 
-    $('#user-stop-no,#user-route-no').focus(function(){
+    $('#user-stop-no,#user-route-no').focus(function() {
         $('#err-label-for-stopid-input,#err-label-for-route-input').addClass('d-none');
-        if(event.target.id==='user-stop-no')
-            $('#user-stop-no').attr('placeholder','');
-        if(event.target.id==='user-route-no')
-            $('#user-route-no').attr('placeholder','');
+        if (event.target.id === 'user-stop-no')
+            $('#user-stop-no').attr('placeholder', '');
+        if (event.target.id === 'user-route-no')
+            $('#user-route-no').attr('placeholder', '');
 
 
     });
 
 
-    $('#user-stop-no,#user-route-no').blur(function(){
-        $('#user-stop-no').attr('placeholder','Search by bus stop number or by address');
-        $('#user-route-no').attr('placeholder','Search by route route number ');
+    $('#user-stop-no,#user-route-no').blur(function() {
+        $('#user-stop-no').attr('placeholder', 'Search by bus stop number or by address');
+        $('#user-route-no').attr('placeholder', 'Search by route route number ');
     });
 
 
 
 
-// .......On Clicking the modal close button bring the bus section into view and clear the input values.......
+    // .......On Clicking the modal close button bring the bus section into view and clear the input values.......
 
-    $('#busModal .modal-footer  button').on('click',function(){
+    $('#busModal .modal-footer  button').on('click', function() {
 
         $('html, body').animate({
             scrollTop: $('#dublin-bus').offset().top
@@ -301,34 +378,33 @@ $(document).ready(function () {
 
     });
 
-    $('#cover-bus-btn').click(function () {
+    $('#cover-bus-btn').click(function() {
         $('html, body').animate({
             scrollTop: $('#dublin-bus').offset().top
         }, 1000);
     });
-    $('#cover-train-btn').click(function () {
+    $('#cover-train-btn').click(function() {
         $('html, body').animate({
             scrollTop: $('#irish-rail').offset().top
         }, 1000);
     });
-     $('#cover-bike-btn').click(function () {
+    $('#cover-bike-btn').click(function() {
         $('html, body').animate({
             scrollTop: $('#dublin-bike').offset().top
         }, 1000);
     });
 
-    $('#user-stop-no').keyup(function (event) {
-        if(event.keyCode==13){
+    $('#user-stop-no').keyup(function(event) {
+        if (event.keyCode == 13) {
             $('#stop-search-btn').click();
         }
 
     });
-    $('#user-route-no').keyup(function (event) {
-        if(event.keyCode==13){
+    $('#user-route-no').keyup(function(event) {
+        if (event.keyCode == 13) {
             $('#route-search-btn').click();
         }
 
     });
 
 });
-
