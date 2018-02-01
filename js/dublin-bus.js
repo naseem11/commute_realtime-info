@@ -358,8 +358,8 @@ $(document).ready(function() {
 
 
     $('#user-stop-no,#user-route-no').blur(function() {
-        $('#user-stop-no').attr('placeholder', 'Search by bus stop number or by address');
-        $('#user-route-no').attr('placeholder', 'Search by route route number ');
+        $('#user-stop-no').attr('placeholder', 'Enter bus stop number or  address here...');
+        $('#user-route-no').attr('placeholder', 'Enter route number here...');
     });
 
 

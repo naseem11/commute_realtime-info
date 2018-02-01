@@ -65,7 +65,7 @@ $(document).ready(function () {
     });
 
     $('#user-bike-station-name').blur(function(){
-        $('#user-bike-station-name').attr('placeholder','Search by station number or by address');
+        $('#user-bike-station-name').attr('placeholder','Enter bikes station number or address here...');
 
     });
 
