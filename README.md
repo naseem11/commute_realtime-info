@@ -15,7 +15,7 @@ To get realtime information user need to select either Dublin bus or Irirsh rail
 There are three ways you can get the information for any bus stop , by stop number , by address or by route number.
 Say user want to get the buses status at stop number 2216.
 
-![dublinbus](https://cloud.githubusercontent.com/assets/22799847/26246034/01356852-3c8f-11e7-9586-1a414ca356da.PNG)
+![dubbus](https://user-images.githubusercontent.com/22799847/35687847-b127c126-0767-11e8-9d90-b05ee646efc2.PNG)
 
 This app will give status of the buses at stop number 2216.
 
