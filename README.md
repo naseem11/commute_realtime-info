@@ -2,7 +2,7 @@
 
 # What is Realtimer?
 
-This application provides the realtime information for Dublin bus,Irish railand Dublin bike services for any bus stop or station.To get this information it uses Dublin bus and Irish rail realtime APIs.
+This application provides the realtime information for Dublin bus,Irish rail and Dublin bike services for any bus stop or station.To get this information it uses Dublin bus and Irish rail realtime APIs.
 
 # How it works?
 
