@@ -8,7 +8,8 @@ This application provides the realtime information for Dublin bus and Irish rail
 
 To get realtime information user need to select either Dublin bus or Irirsh rail
 
-![realtimerhome](https://user-images.githubusercontent.com/22799847/35687079-ac81ead6-0765-11e8-88ee-9fe280aa4e84.PNG)
+![realtimerhome](https://user-images.githubusercontent.com/22799847/35687426-99b807cc-0766-11e8-82fc-4cf7322d73bc.PNG)
+
 ## Getting Information for Dublin Bus
 
 There are three ways you can get the information for any bus stop , by stop number , by address or by route number.
