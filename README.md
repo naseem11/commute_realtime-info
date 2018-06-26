@@ -53,7 +53,7 @@ This application uses Dublin bus and Irish rail api to get the status of buses a
 
 **API :** Dublin Bus, Irish rail, Dublin bike realtime information APIs.
 
-**Hosting :** Heroku
+**Hosting :** Heroku , Github Pages
 
 
 
