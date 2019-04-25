@@ -2,23 +2,20 @@
 $(document).ready(function () {
     // ............Get the list of all stations.............
 
-    var yql_url = 'https://query.yahooapis.com/v1/public/yql';
-    var url = 'https://api.irishrail.ie/realtime/realtime.asmx/getAllStationsXML_WithStationType?StationType=A';
+    
+    var url ='https://cors-anywhere.herokuapp.com/' + 'https://api.irishrail.ie/realtime/realtime.asmx/getAllStationsXML_WithStationType?StationType=A';
 
     $.ajax({
-        'url': yql_url,
-        'data': {
-            'q': 'SELECT * FROM xml WHERE url="'+url+'"',
-            'format': 'xml'
-
-        },
+        'url': url,
+       
         'dataType': 'xml',
         'success': function(response) {
 
             var stationsJson=$.xml2json(response);
             var stations=[];
-            for (i=0;i<stationsJson['results']['ArrayOfObjStation']['objStation'].length; i++){
-                stations.push(stationsJson['results']['ArrayOfObjStation']['objStation'][i]['StationDesc']);
+            console.log(stationsJson);
+            for (i=0;i<stationsJson['objStation'].length; i++){
+                stations.push(stationsJson['objStation'][i]['StationDesc']);
             }
 
             // Removing Dublicate values from the array of station names
@@ -80,7 +77,7 @@ function displayTrainStatus() {
         clearStatusTable();
 
 
-        var yql_url = 'https://query.yahooapis.com/v1/public/yql';
+       
         var api = 'https://api.irishrail.ie/realtime/realtime.asmx/getStationDataByNameXML?StationDesc=';
         var stationName = $('#user-station-name').val();
         var tableCaption=stationName;
@@ -91,23 +88,18 @@ function displayTrainStatus() {
             stationName=stationName+tempArr[i]+"%20";
         }
 
-        var url = api + stationName;
+        var url = 'https://cors-anywhere.herokuapp.com/'+api + stationName;
 
 
         $.ajax({
-            'url': yql_url,
-            'data': {
-                'q': 'SELECT * FROM xml WHERE url="'+url+'"',
-                'format': 'xml',
-
-
-            },
+            'url': url,
+           
             'dataType': 'xml',
             'success': function(response) {
                 var statusJson = $.xml2json(response);
                 // .....if user input unlknowm station name i.e json object is undefined....
-
-                if (statusJson['results']['ArrayOfObjStationData']['objStationData'] === undefined) {
+                console.log(statusJson);
+                if (statusJson['objStationData'] === undefined) {
 
 
                     $('#status-modal').modal('show');
@@ -123,10 +115,10 @@ function displayTrainStatus() {
                         .on('click', closeTrainStatus));
 
                     // Checking if returned data(stationJson)is an object or array of objects
-                    if (Object.prototype.toString.call(statusJson['results']['ArrayOfObjStationData']['objStationData']) === '[object Array]') {
+                    if (Object.prototype.toString.call(statusJson['objStationData']) === '[object Array]') {
 
                         // ......Sorting status data according to due time....
-                        statusJson=statusJson['results']['ArrayOfObjStationData']['objStationData'].sort(compare);
+                        statusJson=statusJson['objStationData'].sort(compare);
 
 
 
@@ -155,7 +147,7 @@ function displayTrainStatus() {
                     else {
 
 
-                        statusJson=statusJson['results']['ArrayOfObjStationData']['objStationData'];
+                        statusJson=statusJson['objStationData'];
 
                         // checking if user station name is same as origin of a train then schedule arrival will be replaced by schedule departure and ETA with originaltime
                         if ($('#user-station-name').val() === statusJson['Origin']) {

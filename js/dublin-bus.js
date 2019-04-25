@@ -3,26 +3,21 @@ $(window).on('load', function() {
 
 
     // ......................Retrieving list of all the stops....................
-    var yql_url = 'https://query.yahooapis.com/v1/public/yql';
-
+   
     $.ajax({
-        'url': yql_url,
-        'data': {
-            'q': 'SELECT * FROM json WHERE url="https://data.dublinked.ie/cgi-bin/rtpi/busstopinformation?operator=bac&format=json"',
-            'format': 'json'
-
-        },
-        'dataType': 'json',
+        'url': "https://cors-anywhere.herokuapp.com/" + "https://data.dublinked.ie/cgi-bin/rtpi/busstopinformation?operator=bac&format=json",
+       
+        
         'success': function(jsonData) {
 
-
+            
             var listOfStops = [];
 
-            for (i = 0; i < jsonData['query']['results']['json']['numberofresults']; i++) {
+            for (i = 0; i < jsonData['numberofresults']; i++) {
 
 
 
-                listOfStops.push(jsonData['query']['results']['json']['results'][i]['stopid'] + "  , " + jsonData['query']['results']['json']['results'][i]['fullname']);
+                listOfStops.push(jsonData['results'][i]['stopid'] + "  , " + jsonData['results'][i]['fullname']);
             }
 
             $("#user-stop-no").autocomplete({
@@ -41,23 +36,19 @@ $(window).on('load', function() {
 
 
     $.ajax({
-        'url': yql_url,
-        'data': {
-            'q': 'SELECT * FROM json WHERE url="https://data.dublinked.ie/cgi-bin/rtpi/routelistinformation?operator=bac&format=json"',
-            'format': 'json'
-
-        },
-        'dataType': 'json',
+        'url':"https://cors-anywhere.herokuapp.com/"+ "https://data.dublinked.ie/cgi-bin/rtpi/routelistinformation?operator=bac&format=json",
+       
+       
         'success': function(jsonData) {
 
-
+           
             var listOfRoutes = [];
-            for (i = 0; i < jsonData['query']['results']['json']['numberofresults']; i++) {
+            for (i = 0; i < jsonData['numberofresults']; i++) {
 
                 // Only push those routes to the list which are  starting with a digit
-                if (/^\d/.test(jsonData['query']['results']['json']['results'][i]['route'])) {
+                if (/^\d/.test(jsonData['results'][i]['route'])) {
 
-                    listOfRoutes.push(jsonData['query']['results']['json']['results'][i]['route']);
+                    listOfRoutes.push(jsonData['results'][i]['route']);
                 }
 
 
@@ -92,15 +83,10 @@ $(window).on('resize', function() {
 function getBusTime(stopNo, createTableCallback) {
 
     $('#myModalLabel').text("Realtime Information For Stop " + stopNo);
-    var yql_url = 'https://query.yahooapis.com/v1/public/yql';
-    var url = 'https://data.dublinked.ie/cgi-bin/rtpi/realtimebusinformation?stopid=' + stopNo + '&maxresults=8' + '&format=json';
+  
+    var url = "https://cors-anywhere.herokuapp.com/" +'https://data.dublinked.ie/cgi-bin/rtpi/realtimebusinformation?stopid=' + stopNo + '&maxresults=8' + '&format=json';
     $.ajax({
-        'url': yql_url,
-        'data': {
-            'q': 'SELECT * FROM json WHERE url="' + url + '"',
-            'format': 'json'
-
-        },
+        'url': url,       
         'dataType': 'json',
         'success': function(jsonData) {
 
@@ -120,16 +106,12 @@ function getRouteInfo(routeNo, dispplayRouteDirectionsCallback) {
 
 
 
-    var yql_url = 'https://query.yahooapis.com/v1/public/yql';
-    var url = 'https://data.dublinked.ie/cgi-bin/rtpi/routeinformation?routeid=' + routeNo + '&operator=bac' + '&format=json';
+   
+    var url = "https://cors-anywhere.herokuapp.com/" +'https://data.dublinked.ie/cgi-bin/rtpi/routeinformation?routeid=' + routeNo + '&operator=bac' + '&format=json';
 
     $.ajax({
-        'url': yql_url,
-        'data': {
-            'q': 'SELECT * FROM json WHERE url="' + url + '"',
-            'format': 'json'
-
-        },
+        'url': url,
+       
 
         'success': function(jsonData) {
 
@@ -151,8 +133,7 @@ function getRouteInfo(routeNo, dispplayRouteDirectionsCallback) {
 // ................. Start of createTable Function.............
 
 function createTable(jsonData) {
-
-    var jsonData = jsonData['query']['results']['json'];
+  
 
 
     clearExistingData();
@@ -194,8 +175,7 @@ function createTable(jsonData) {
 
 function dispalyRouteDirections(jsonData) {
 
-    var jsonData = jsonData['query']['results']['json'];
-
+ 
 
     if (!jsonData['errormessage'] && jsonData['numberofresults'] !== 0) {
         $('.modal-body').addClass('list-group');
